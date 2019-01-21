@@ -6,19 +6,33 @@ class ProductsController {
     def productsService
 
     def getAll() {
-//        println params
         def availableInventory = params.boolean('availableInventory')
-//        println (params.availableInventory == 1)
-//        println (params.availableInventory == true)
-
         if (availableInventory) {
-            respond productsService.getAllByAvailableInventory()
+            respond productsService.getAllWithAvailableInventory()
         } else {
             respond productsService.getAll()
         }
     }
 
+    def getById() {
+        respond productsService.getById(params)
+    }
+
     def getAllByTitle() {
         respond productsService.getAllByTitle(params)
+    }
+
+    def purchaseById() {
+        def result = productsService.purchaseById(params)
+
+        if (result instanceof Integer) {
+            if (result == 400) {
+                response.sendError(result, "Product without inventory cannot be purchased")
+            } else {
+                response.sendError(result)
+            }
+        } else {
+            respond result
+        }
     }
 }
