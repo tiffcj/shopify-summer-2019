@@ -7,4 +7,9 @@ class Products {
 
     static constraints = {
     }
+
+    static mapping = {
+        id generator: 'sequence', params: [sequence: 'PRODUCTS_SEQUENCE']
+        version false
+    }
 }
