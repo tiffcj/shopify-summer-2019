@@ -28,6 +28,8 @@ class ProductsController {
         if (result instanceof Integer) {
             if (result == 400) {
                 response.sendError(result, "Product without inventory cannot be purchased")
+            } else if (result == 404) {
+                response.sendError(result, "Product was not found")
             } else {
                 response.sendError(result)
             }
